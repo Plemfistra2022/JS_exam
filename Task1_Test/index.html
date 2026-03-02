@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Test</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Test</h1>
+    <div class="add_pair">
+        <div class="input">
+            <label for="pairInput">Name/Value Pair</label>
+            <input type="text" name="pairInput" id="pairInput">
+        </div>
+        <button id="addBtn">Add</button>
+    </div>
+    <div class="list">
+        <div class="select">
+            <label for="pairList">Name/Value Pair List</label>
+            <select name="pairList" id="pairList" multiple size="10"></select>
+        </div>
+        <div id="list-actions">
+            <button id="sortName">Sort by Name</button>
+            <button id="sortValue">Sort by Value</button>
+            <button id="deleteBtn">Delete</button>
+        </div>
+    </div>
+</div>
+<script src="main.js"></script>
+</body>
+</html>
