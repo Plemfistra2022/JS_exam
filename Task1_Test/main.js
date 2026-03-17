@@ -18,6 +18,18 @@ addBtn.addEventListener("click", function() {
     }
     let name = parts[0].trim();
     let value = parts[1].trim();
+
+    let existingOptions = Array.from(pairList.options);
+    let isDuplicate = existingOptions.some(opt => {
+        let existingName = opt.textContent.split("=")[0].trim();
+        return existingName.toLowerCase() === name.toLowerCase();
+    });
+
+    if (isDuplicate) {
+        alert("This key already exists!");
+        return;
+    }
+
     let regex = /^[a-z0-9]+$/i;
     if (!regex.test(name) || !regex.test(value)) {
         alert("Invalid format");
@@ -34,33 +46,30 @@ deleteBtn.addEventListener("click", function() {
     Array.from(pairList.selectedOptions).forEach(option => option.remove());
 });
 
-// Sort by Name
-sortName.addEventListener("click", function() {
+// Sort
+function sortPairs(isByName) {
     let options = Array.from(pairList.options);
+
     options.sort(function(a, b) {
-        let [nameA] = a.textContent.split("=");
-        let [nameB] = b.textContent.split("=");
-        return nameA.localeCompare(nameB);
+        let partsA = a.textContent.split("=");
+        let partsB = b.textContent.split("=");
+
+        let valA = isByName ? partsA[0] : partsA[1];
+        let valB = isByName ? partsB[0] : partsB[1];
+
+        if (!isByName) {
+            let numA = Number(valA);
+            let numB = Number(valB);
+            if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+        }
+
+        return valA.localeCompare(valB);
     });
+
     pairList.innerHTML = "";
-    options.forEach(function(option) {
-        pairList.appendChild(option);
-    });
-});
+    options.forEach(opt => pairList.appendChild(opt));
+}
 
-// Sort by Value
-sortValue.addEventListener("click", function() {
-    let options = Array.from(pairList.options);
-    options.sort(function(a, b) {
-        let [, valueA] = a.textContent.split("=");
-        let [, valueB] = b.textContent.split("=");
-
-        return valueA.localeCompare(valueB);
-    });
-    pairList.innerHTML = "";
-    options.forEach(function(option) {
-        pairList.appendChild(option);
-    });
-});
-
+sortName.addEventListener("click", () => sortPairs(true));
+sortValue.addEventListener("click", () => sortPairs(false));
 
